@@ -1,5 +1,5 @@
 "use client"
-import React from 'react'
+import React, { useState } from 'react'
 import {motion} from 'framer-motion'
 import {Inter} from 'next/font/google'
 import './globals.css'
@@ -12,7 +12,7 @@ import Logo from './components/Logo'
 import Links from './components/Links'
 import Hero from './components/Hero'
 const inter = Inter({weight:"variable",subsets:['latin']})
-function page() {
+function Page() {
   const images = ['astron.jpg','astronaut2.jpg','astro.jpg']
   const headerVariants = {
     init:{
@@ -43,16 +43,21 @@ function page() {
       }
     }
   }
+  const [currentSlide,setcurrentslide] = useState<number>(0)
   return (
     <motion.div  className='w-full h-screen '>
       <Swiper
       modules={[EffectFade,Autoplay]}
+      onSlideChange={(swiperInstance) => {
+       setcurrentslide(swiperInstance.activeIndex);
+      }}
       effect='fade'
       slidesPerView={1}
       autoplay={{
-        delay:10000,
+        delay:currentSlide!==0?8000:900,
         disableOnInteraction:false
       }}
+
       speed={800}
 
       loop={true}
@@ -81,4 +86,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
